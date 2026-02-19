@@ -1,0 +1,13 @@
+<svg width="220" height="60" viewBox="0 0 220 60" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .gold { fill: #b8901f; }
+    .brand { font-family: 'Playfair Display', serif; font-size: 32px; letter-spacing: 4px; }
+  </style>
+
+  <!-- Emblem -->
+  <circle cx="25" cy="30" r="10" stroke="#b8901f" stroke-width="2" fill="none"/>
+  <path d="M20 30 Q25 20 30 30 Q25 40 20 30" fill="#b8901f"/>
+
+  <!-- Brand Name -->
+  <text x="50" y="38" class="gold brand">ALLURE</text>
+</svg>
