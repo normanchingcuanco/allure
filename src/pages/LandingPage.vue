@@ -21,19 +21,13 @@ onMounted(() => {
 <template>
   <div class="landing">
 
-    <!-- ===============================
-         TOP BAR (LOGO + THEME TOGGLE)
-    ================================ -->
-
+    <!-- TOP BAR -->
     <div class="landing-topbar">
       <img :src="logoSrc" alt="Allure Logo" class="landing-logo" />
       <ThemeToggle />
     </div>
 
-    <!-- ===============================
-         HERO SECTION
-    ================================ -->
-
+    <!-- HERO -->
     <section class="hero container">
 
       <h1 class="hero-title">
@@ -56,10 +50,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- ===============================
-         WHAT IS ALLURE
-    ================================ -->
-
+    <!-- WHAT IS ALLURE -->
     <section class="section container">
       <h2 class="section-title">A New Way to Connect Globally</h2>
 
@@ -72,10 +63,7 @@ onMounted(() => {
       </p>
     </section>
 
-    <!-- ===============================
-         HOW IT WORKS
-    ================================ -->
-
+    <!-- HOW IT WORKS -->
     <section class="section alt-bg">
       <div class="container">
         <h2 class="section-title">How It Works</h2>
@@ -105,10 +93,7 @@ onMounted(() => {
       </div>
     </section>
 
-    <!-- ===============================
-         FINAL CTA
-    ================================ -->
-
+    <!-- CTA -->
     <section class="cta-section container">
       <h2>Ready to Connect Differently?</h2>
 
@@ -126,10 +111,7 @@ onMounted(() => {
 
 <style scoped>
 
-/* ===============================
-   TOPBAR
-================================ */
-
+/* TOPBAR */
 .landing-topbar {
   display: flex;
   justify-content: space-between;
@@ -141,10 +123,7 @@ onMounted(() => {
   width: 160px;
 }
 
-/* ===============================
-   HERO
-================================ */
-
+/* HERO */
 .hero {
   text-align: center;
   padding: 100px 20px 80px;
@@ -170,10 +149,7 @@ onMounted(() => {
   flex-wrap: wrap;
 }
 
-/* ===============================
-   SECTIONS
-================================ */
-
+/* SECTIONS */
 .section {
   padding: 100px 20px;
   text-align: center;
@@ -195,9 +171,13 @@ onMounted(() => {
   font-size: 16px;
 }
 
-/* ===============================
-   HOW IT WORKS FIX
-================================ */
+/* HOW IT WORKS */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
 
 .step-card {
   padding: 30px;
@@ -207,9 +187,16 @@ onMounted(() => {
   transition: 0.3s ease;
 }
 
+.step-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+}
+
+/* 🔥 GOLD BOLD TITLES */
 .step-title {
-  color: var(--text-primary);
-  font-weight: 600;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 18px;
   margin-bottom: 12px;
 }
 
@@ -218,22 +205,7 @@ onMounted(() => {
   font-size: 15px;
 }
 
-.step-card:hover {
-  border-color: var(--accent);
-  transform: translateY(-5px);
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 50px;
-}
-
-/* ===============================
-   CTA
-================================ */
-
+/* CTA */
 .cta-section {
   text-align: center;
   padding: 120px 20px;
@@ -249,10 +221,7 @@ onMounted(() => {
   margin-bottom: 30px;
 }
 
-/* ===============================
-   BUTTONS
-================================ */
-
+/* BUTTONS */
 .btn-primary {
   background: linear-gradient(135deg, var(--accent), var(--accent-soft));
   color: #000;
@@ -284,10 +253,7 @@ onMounted(() => {
   color: #000;
 }
 
-/* ===============================
-   RESPONSIVE
-================================ */
-
+/* RESPONSIVE */
 @media (max-width: 768px) {
   .hero-title {
     font-size: 34px;
