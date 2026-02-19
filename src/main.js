@@ -1,5 +1,5 @@
 // ===============================
-// SESSION 70 - Router Setup
+// Router Setup
 // ===============================
 
 import { createApp } from "vue";
@@ -19,12 +19,13 @@ import App from "./App.vue";
 // ===============================
 // Import Pages
 // ===============================
+import LandingPage from "./pages/LandingPage.vue";
 import RegisterPage from "./pages/RegisterPage.vue";
 import LoginPage from "./pages/LoginPage.vue";
 import ProductsPage from "./pages/ProductsPage.vue";
 import ProductDetailsPage from "./pages/ProductDetailsPage.vue";
 import AdminDashboardPage from "./pages/AdminDashboardPage.vue";
-import AdminOrdersPage from "./pages/AdminOrdersPage.vue"; // ✅ ADD THIS
+import AdminOrdersPage from "./pages/AdminOrdersPage.vue";
 import LogoutPage from "./pages/LogoutPage.vue";
 import AddProductPage from "./pages/AddProductPage.vue";
 import EditProductPage from "./pages/EditProductPage.vue";
@@ -39,7 +40,8 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage.vue";
 // ===============================
 const routes = [
 
-  { path: "/", name: "Home", redirect: "/products" },
+  // ✅ Landing Page
+  { path: "/", name: "Home", component: LandingPage },
 
   { path: "/register", name: "Register", component: RegisterPage },
 
@@ -47,30 +49,18 @@ const routes = [
 
   { path: "/logout", name: "Logout", component: LogoutPage },
 
-  { path: "/products", name: "Products", component: ProductsPage },
+  // 🔒 Protected Routes
+  { path: "/products", name: "Products", component: ProductsPage, meta: { requiresAuth: true } },
 
-  { path: "/products/create", name: "AddProduct", component: AddProductPage },
+  { path: "/products/create", name: "AddProduct", component: AddProductPage, meta: { requiresAuth: true } },
 
-  { path: "/products/edit/:id", name: "EditProduct", component: EditProductPage },
+  { path: "/products/edit/:id", name: "EditProduct", component: EditProductPage, meta: { requiresAuth: true } },
 
-  { path: "/products/:id", name: "ProductDetails", component: ProductDetailsPage },
+  { path: "/products/:id", name: "ProductDetails", component: ProductDetailsPage, meta: { requiresAuth: true } },
 
-  // ===============================
-  // ADMIN ROUTES
-  // ===============================
-  { 
-    path: "/admin", 
-    name: "AdminDashboard", 
-    component: AdminDashboardPage,
-    meta: { requiresAuth: true }
-  },
+  { path: "/admin", name: "AdminDashboard", component: AdminDashboardPage, meta: { requiresAuth: true } },
 
-  { 
-    path: "/admin/orders", 
-    name: "AdminOrders", 
-    component: AdminOrdersPage,
-    meta: { requiresAuth: true }
-  },
+  { path: "/admin/orders", name: "AdminOrders", component: AdminOrdersPage, meta: { requiresAuth: true } },
 
   { path: "/profile", name: "Profile", component: ProfilePage, meta: { requiresAuth: true } },
 
@@ -92,13 +82,14 @@ const router = createRouter({
 });
 
 // ===============================
-// ROUTER GUARD
+// Router Guard
 // ===============================
 router.beforeEach(async (to, from, next) => {
 
   const globalStore = useGlobalStore();
   const token = localStorage.getItem("token");
 
+  // Load user if token exists
   if (token && !globalStore.user.email) {
     try {
       await globalStore.getUserDetails(token);
@@ -107,11 +98,12 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
+  // 🔒 Only block protected routes
   if (to.meta.requiresAuth && !token) {
-    next("/login");
-  } else {
-    next();
+    return next("/login");
   }
+
+  next();
 });
 
 // ===============================
