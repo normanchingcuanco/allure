@@ -35,16 +35,21 @@ onMounted(() => {
         <img :src="logoSrc" alt="Logo" class="logo-img" />
       </router-link>
 
+      <!-- ✅ FIXED TOGGLE BUTTON -->
       <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
         data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <!-- ✅ FIXED ID (must match data-bs-target) -->
+      <div class="collapse navbar-collapse" id="navbarNav">
         <div class="navbar-nav ms-auto">
 
           <!-- Products Link or Dashboard for admins -->
@@ -83,6 +88,7 @@ onMounted(() => {
           <ThemeToggle />
         </div>
       </div>
+
     </div>
   </nav>
 </template>
@@ -92,6 +98,15 @@ onMounted(() => {
   background: var(--card-bg);
   border-bottom: 1px solid var(--border);
   transition: background 0.3s ease;
+}
+
+/* Make toggler visible in dark theme */
+.navbar-toggler {
+  border: 1px solid var(--border);
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
 }
 
 .logo-wrapper {
