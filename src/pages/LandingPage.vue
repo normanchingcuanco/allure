@@ -1,8 +1,41 @@
+<script setup>
+import { ref, onMounted } from "vue";
+import ThemeToggle from "../components/ThemeToggle.vue";
+
+const logoSrc = ref("/allure-logo-dark.svg");
+
+const updateLogo = () => {
+  const theme = localStorage.getItem("theme");
+  logoSrc.value =
+    theme === "light"
+      ? "/allure-logo-light.svg"
+      : "/allure-logo-dark.svg";
+};
+
+onMounted(() => {
+  updateLogo();
+  window.addEventListener("storage", updateLogo);
+});
+</script>
+
 <template>
   <div class="landing">
 
-    <!-- HERO SECTION -->
+    <!-- ===============================
+         TOP BAR (LOGO + THEME TOGGLE)
+    ================================ -->
+
+    <div class="landing-topbar">
+      <img :src="logoSrc" alt="Allure Logo" class="landing-logo" />
+      <ThemeToggle />
+    </div>
+
+    <!-- ===============================
+         HERO SECTION
+    ================================ -->
+
     <section class="hero container">
+
       <h1 class="hero-title">
         Where Filipino Connections Meet the World.
       </h1>
@@ -13,7 +46,7 @@
       </p>
 
       <div class="hero-buttons">
-        <router-link to="/profiles" class="btn-primary">
+        <router-link to="/login" class="btn-primary">
           Explore Profiles
         </router-link>
 
@@ -23,8 +56,10 @@
       </div>
     </section>
 
+    <!-- ===============================
+         WHAT IS ALLURE
+    ================================ -->
 
-    <!-- WHAT IS ALLURE -->
     <section class="section container">
       <h2 class="section-title">A New Way to Connect Globally</h2>
 
@@ -37,67 +72,43 @@
       </p>
     </section>
 
+    <!-- ===============================
+         HOW IT WORKS
+    ================================ -->
 
-    <!-- HOW IT WORKS -->
     <section class="section alt-bg">
       <div class="container">
         <h2 class="section-title">How It Works</h2>
 
         <div class="steps">
-          <div class="step-card card">
-            <h3>Build Your Presence</h3>
-            <p>Create a profile that reflects who you are — your interests, values, and what you're looking for.</p>
+          <div class="step-card">
+            <h3 class="step-title">Build Your Presence</h3>
+            <p class="step-text">
+              Create a profile that reflects who you are — your interests, values, and what you're looking for.
+            </p>
           </div>
 
-          <div class="step-card card">
-            <h3>Discover & Show Interest</h3>
-            <p>Browse profiles and connect with people who align with your goals.</p>
+          <div class="step-card">
+            <h3 class="step-title">Discover & Show Interest</h3>
+            <p class="step-text">
+              Browse profiles and connect with people who align with your goals.
+            </p>
           </div>
 
-          <div class="step-card card">
-            <h3>Unlock the Conversation</h3>
-            <p>Activate chat and premium features to explore deeper compatibility.</p>
+          <div class="step-card">
+            <h3 class="step-title">Unlock the Conversation</h3>
+            <p class="step-text">
+              Activate chat and premium features to explore deeper compatibility.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
+    <!-- ===============================
+         FINAL CTA
+    ================================ -->
 
-    <!-- INTENTIONAL DESIGN -->
-    <section class="section container">
-      <h2 class="section-title">Connection, But Curated</h2>
-
-      <p class="section-text">
-        Allure is built for people who are serious about meaningful relationships.
-      </p>
-
-      <p class="section-text">
-        Profiles are intentional. Interactions are respectful. And members control what they share.
-      </p>
-
-      <p class="section-text highlight">
-        No noise. Just real connections.
-      </p>
-    </section>
-
-
-    <!-- GLOBAL -->
-    <section class="section alt-bg">
-      <div class="container">
-        <h2 class="section-title">From the Philippines to the World</h2>
-
-        <p class="section-text">
-          Distance shouldn’t limit connection.
-        </p>
-
-        <p class="section-text">
-          Whether you're across the city or across the globe, Allure brings Filipino singles and international users together in one refined space.
-        </p>
-      </div>
-    </section>
-
-
-    <!-- FINAL CTA -->
     <section class="cta-section container">
       <h2>Ready to Connect Differently?</h2>
 
@@ -113,13 +124,22 @@
   </div>
 </template>
 
-
-<script setup>
-// No logic needed for now
-</script>
-
-
 <style scoped>
+
+/* ===============================
+   TOPBAR
+================================ */
+
+.landing-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+}
+
+.landing-logo {
+  width: 160px;
+}
 
 /* ===============================
    HERO
@@ -127,7 +147,7 @@
 
 .hero {
   text-align: center;
-  padding: 120px 20px 100px;
+  padding: 100px 20px 80px;
 }
 
 .hero-title {
@@ -149,7 +169,6 @@
   gap: 20px;
   flex-wrap: wrap;
 }
-
 
 /* ===============================
    SECTIONS
@@ -176,22 +195,9 @@
   font-size: 16px;
 }
 
-.highlight {
-  color: var(--accent);
-  font-weight: 600;
-}
-
-
 /* ===============================
-   STEPS
+   HOW IT WORKS FIX
 ================================ */
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 50px;
-}
 
 .step-card {
   padding: 30px;
@@ -201,11 +207,28 @@
   transition: 0.3s ease;
 }
 
+.step-title {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.step-text {
+  color: var(--text-secondary);
+  font-size: 15px;
+}
+
 .step-card:hover {
   border-color: var(--accent);
   transform: translateY(-5px);
 }
 
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  margin-top: 50px;
+}
 
 /* ===============================
    CTA
@@ -225,7 +248,6 @@
   color: var(--text-secondary);
   margin-bottom: 30px;
 }
-
 
 /* ===============================
    BUTTONS
@@ -262,7 +284,6 @@
   color: #000;
 }
 
-
 /* ===============================
    RESPONSIVE
 ================================ */
@@ -275,6 +296,9 @@
   .section-title {
     font-size: 26px;
   }
-}
 
+  .landing-topbar {
+    padding: 20px;
+  }
+}
 </style>
